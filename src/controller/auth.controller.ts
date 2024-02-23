@@ -44,20 +44,22 @@ export async function postPatientRegister(req: Request, res: Response) {
   }
 }
 
-export async function patientLogin(req: Request, res: Response) {
+export async function postPatientLogin(req: Request, res: Response) {
   const { email, plain } = req.body;
+
+  console.log(email, plain);
 
   try {
     const patient = await db.patient.findFirst({ where: { email } });
 
     if (!patient) {
-      return res.json(cr.str("bad", "wrong credentials"));
+      return res.json(cr.str("bad", "patient_does_not_exist"));
     }
 
     const vp = await argon2.verify(patient.password, plain);
 
     if (!vp) {
-      return res.json(cr.str("bad", "wrong credentials"));
+      return res.json(cr.str("bad", "wrong_credentials"));
     }
 
     const ptoken = jwt.sign({ pid: patient.id, pcat: patient.createdAt }, process.env.P_SECRET!);

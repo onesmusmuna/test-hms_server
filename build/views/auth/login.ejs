@@ -8,7 +8,7 @@
   <body>
     <h1>Login</h1>
 
-    <form>
+    <form id="form_login">
       <input type="email" name="email" placeholder="Email" />
       <input type="password" name="plain" placeholder="Password" />
 
@@ -19,5 +19,39 @@
     <hr />
 
     <a href="/auth/register" id="register">Already have an account</a>
+
+    <script>
+      const form = document.getElementById("form_login");
+      const register = document.getElementById("register");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        const email = formData.get("email");
+        const plain = formData.get("plain");
+
+        fetch("http://localhost:3000/auth/login", {
+          method: "post",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, plain }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.msg === "patient_does_not_exist") {
+              return register.click();
+            }
+
+            if (data.msg === "wrong_credentials") {
+              alert("wrong credentials");
+            }
+
+            if (data.status === "ok") {
+              // to patient account page (protected)
+            }
+          });
+      });
+    </script>
   </body>
 </html>
