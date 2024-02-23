@@ -1,4 +1,4 @@
-class cr {
+export default class cr {
   static str(status: TStatus, msg: string): IReturn {
     return { status, msg };
   }

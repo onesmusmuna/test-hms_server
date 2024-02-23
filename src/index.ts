@@ -10,5 +10,5 @@ dotenv.config();
     return console.log("\nDefine ENVs\n");
   }
 
-  app.listen(PORT, () => console.log(`HMS server listening on port: ${PORT}`));
+  app.listen(PORT, () => console.log(`HMS server listening on port: http://localhost:${PORT}`));
 })();
