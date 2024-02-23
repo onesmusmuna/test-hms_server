@@ -5,10 +5,16 @@ import jwt from "jsonwebtoken";
 import db from "../util/db.util";
 import cr from "../util/cr.util";
 
-export function getPatientRegister(req: Request, res: Response) {}
+export function getPatientRegister(req: Request, res: Response) {
+  return res.render("auth/register.ejs");
+}
 
-export async function patientRegister(req: Request, res: Response) {
-  const { email, plain, fname, lname, phone } = req.body;
+export function getPatientLogin(req: Request, res: Response) {
+  return res.render("auth/login.ejs");
+}
+
+export async function postPatientRegister(req: Request, res: Response) {
+  const { email, plain, fname, lname } = req.body;
 
   try {
     const userExist = await db.patient.findFirst({ where: { email } });
@@ -22,10 +28,9 @@ export async function patientRegister(req: Request, res: Response) {
     const patient = await db.patient.create({
       data: {
         email,
-        password,
         first_name: fname,
         last_name: lname,
-        phone_no: phone,
+        password,
       },
     });
 

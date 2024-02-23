@@ -1,11 +1,11 @@
-import { Router } from "express";
+// import { Router } from "express";
 
-import { patientLogin, patientRegister } from "../controller/auth.controller";
+// import { patientLogin, patientRegister } from "../controller/auth.controller";
 
-const routerPatient = Router();
+// const routerPatient = Router();
 
-routerPatient.post("/register", patientRegister);
+// routerPatient.post("/register", patientRegister);
 
-routerPatient.post("/login", patientLogin);
+// routerPatient.post("/login", patientLogin);
 
-export default routerPatient;
+// export default routerPatient;

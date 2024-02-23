@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+  </head>
+  <body>
+    <h1>Register</h1>
+
+    <form id="form_register">
+      <input type="text" name="fname" placeholder="First Name" />
+      <input type="text" name="lname" placeholder="Last Name" />
+      <input type="email" name="email" placeholder="Email" />
+      <input type="password" name="plain" placeholder="Password" />
+
+      <button type="submit">Register</button>
+    </form>
+    <br /><br /><br /><br />
+    <hr />
+
+    <a href="/auth/login" id="login">Already have an account</a>
+
+    <script>
+      const form = document.getElementById("form_register");
+      const login = document.getElementById("login");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        const fname = formData.get("fname");
+        const lname = formData.get("lname");
+        const email = formData.get("email");
+        const plain = formData.get("plain");
+
+        fetch("http://localhost:3000/auth/register", {
+          method: "post",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ fname, lname, email, plain }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === "bad" && data.msg === "user exist") {
+              return login.click();
+            }
+            console.log(data);
+          });
+      });
+    </script>
+  </body>
+</html>
